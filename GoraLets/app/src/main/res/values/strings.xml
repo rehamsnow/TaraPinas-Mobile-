@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GoraLets</string>
+    <string name="number_picker_formatter" />
+    <string name="roboto_light" />
+</resources>

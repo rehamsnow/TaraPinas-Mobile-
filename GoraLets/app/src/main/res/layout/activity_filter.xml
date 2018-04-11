@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ham.goralets.Filter.Filter">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/BtnUnsorted"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Unsorted" />
+    <Button
+        android:id="@+id/BtnByLocation"
+        android:text="By Location"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"/>
+    <Button
+        android:id="@+id/BtnByPrice"
+        android:text="By Price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/BtnByReview"
+        android:text="By Review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+</android.support.constraint.ConstraintLayout>

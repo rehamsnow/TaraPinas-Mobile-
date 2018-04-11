@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "40982193504",
+    "firebase_url": "https://goralets-12533.firebaseio.com",
+    "project_id": "goralets-12533",
+    "storage_bucket": "goralets-12533.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40982193504:android:0b9b7b4743958c4b",
+        "android_client_info": {
+          "package_name": "com.example.ham.goralets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40982193504-908so2ouabnnphttth8p69tjpel1aal3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ham.goralets",
+            "certificate_hash": "1c1a874571410f7abe9f1f22c14b4e41b7e720f6"
+          }
+        },
+        {
+          "client_id": "40982193504-10lphohsidh88unc8cioruhfb7o50q5d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqvGLllQzdU5V8KMZegKvPcct2N5zMK5Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40982193504-10lphohsidh88unc8cioruhfb7o50q5d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.ham.goralets">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/tnsp_logo"
+        android:label="TaraNaSaPinas"
+        android:roundIcon="@drawable/tnsp_logo1"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".LoginF.Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Booking.Bookings" />
+        <activity android:name=".Messages.Messages" />
+        <activity android:name=".Account" />
+        <activity android:name=".Account2" />
+        <activity android:name=".Registration" />
+        <activity android:name=".Filter.Filter" />
+        <activity android:name=".Filter.FilteredCheckbox" />
+        <activity android:name=".Filter.Filter_TravelAgency" />
+        <activity android:name=".Filter.Filter_TravelDeal" />
+        <activity android:name=".Filter.Filter_Cost1" />
+        <activity android:name=".Filter.Filter_Cost2" />
+        <activity android:name=".Filter.Filter_Cost3" />
+        <activity android:name=".Filter.Filter_Cost4" />
+        <activity android:name=".EditAccount.EditUser" />
+        <activity android:name=".Deals.DealLayout" />
+        <activity android:name=".Booking.BookingReview" />
+        <activity android:name=".Booking.BookingMsg" />
+        <activity android:name=".CalendarBooking" />
+        <activity android:name=".Booking.BookingContact" />
+        <activity android:name=".BookingStatus.BookingStatus" />
+        <activity android:name=".BookingStatus.booking_status_details" />
+        <activity android:name=".TravelAgency.AgencyAcct" />
+        <activity android:name=".Messages.MessageCat"></activity>
+    </application>
+
+</manifest>
