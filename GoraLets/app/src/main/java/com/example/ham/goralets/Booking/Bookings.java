@@ -36,7 +36,7 @@ public class Bookings extends AppCompatActivity {
     private TextView TDStartdate, TDEndate, OriginalPrice, PaxNum, BookingPrice, paxnum, duration;
     private Button BtnBook;
     private EditText days, pax1;
-    private int finalValue;
+    private int finalValue, PN, FP;
     private int day2;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -73,6 +73,8 @@ public class Bookings extends AppCompatActivity {
         String ID = prefs.getString("ID", "no id"); //no id: default value
         String Fname = prefs.getString("Fname", "no fname");
         String Lname = prefs.getString("Lname", "no lname");
+        String DealPrice = prefs.getString("DEALPRICE", "0");
+
 
         Log.d(TAG, "Booking ID: " + ID);
         Log.d(TAG, "Booking Fname: " + Fname);
@@ -81,45 +83,44 @@ public class Bookings extends AppCompatActivity {
             days = (EditText) findViewById(R.id.days);
             pax1 = (EditText) findViewById(R.id.pax);
 
+
+ ////////////////////////////////////original price///////////////////////////
             OriginalPrice = (TextView) findViewById(R.id.OriginalPrice);
-            PaxNum = (TextView) findViewById(R.id.PaxNum);
             SetPax = (TextView) findViewById(R.id.SetPax);
 
-            TextView price = findViewById(R.id.BookingPrice);
+            OriginalPrice.setText(DealPrice);
+            String FP1 = OriginalPrice.getText().toString();
 
-            final String Price = getIntent().getStringExtra("Price");
-            Log.d(TAG, "finalPrice : " + Price);
+            final Double FP = Double.parseDouble(FP1);
 
-            price.setText(Price);
-
-//            String intprice = OriginalPrice.getText().toString();
-
-           // if (!Price.isEmpty()) {
-//            final int finalPrice = Integer.parseInt(Price);
-       //         Log.d(TAG, "Int finalPrice : " + finalPrice);
-           // }
 
         SetPax.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    EditText pax = (EditText) findViewById(R.id.pax);
+                    String paxstring = pax.getText().toString();
 
-                    String pax = pax1.getText().toString();
-                    PaxNum.setText(pax);
+                    PaxNum = (TextView) findViewById(R.id.PaxNum);
+                    PaxNum.setText(paxstring);
 
-                   // if (!pax.isEmpty()) {
-                        final int finalPax = Integer.parseInt(pax);
-                        Log.d(TAG, "Int finalPax : " + finalPax);
-                   // }
+                    String Pax = PaxNum.getText().toString();
 
-                    //String p = Integer.toString(finalPax);
-                    BookingPrice = (TextView) findViewById(R.id.BookingPrice);
+                    if (!Pax.isEmpty()) {
+                        PN = Integer.parseInt(Pax);
+                    }
 
-                 //   BookingPrice.setText(String.valueOf(finalPrice* finalPax));
+                    Double FINAL = (FP*PN);
+                    final String FINAL2 = String.valueOf(FINAL);
+                    Log.d(TAG, "FINAL PRICE:"+FP+" x "+PN+ "="+FINAL2);
 
-                //    int pricetotal = finalPax * finalPrice;
-                  //  Log.d(TAG, "price total : " + pricetotal);
+                    TextView price = findViewById(R.id.BookingPrice);
+                    price.setText(FINAL2);
 
-                    BookingPrice.setText(Price);
+                    SharedPreferences prefs3 = PreferenceManager.getDefaultSharedPreferences(Bookings.this);
+                    SharedPreferences.Editor editor = prefs3.edit();
+
+                    editor.putString("FINALPRICE", FINAL2);
+                    editor.commit();
                 }
             });
 
@@ -162,6 +163,7 @@ public class Bookings extends AppCompatActivity {
                             android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                             mDateSetListener,
                             year, month, day);
+
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.show();
                 }

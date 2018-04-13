@@ -3,10 +3,14 @@ package com.example.ham.goralets.BookingStatus;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,10 +21,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ham.goralets.Account;
+import com.example.ham.goralets.BottomNavigationViewHelper;
 import com.example.ham.goralets.Deals.DealsAdapter;
 import com.example.ham.goralets.Deals.DealsGetSet;
 import com.example.ham.goralets.Feedback.FeedbackGetSet;
 import com.example.ham.goralets.MainActivity;
+import com.example.ham.goralets.Messages.MessageCat;
 import com.example.ham.goralets.R;
 
 import org.json.JSONArray;
@@ -34,15 +41,43 @@ public class BookingStatus extends AppCompatActivity {
 
     TextView BSLocation, BSStartdate, BSEnddate, BSStatus;
     Button BtnViewBooking;
-
+    private static final String TAG = "Booking Status";
     List<BookingStatusGetSet> dealList;
     RecyclerView recyclerView;
-
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_status_list);
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                if(item.getItemId() == R.id.homeItem){
+                    Intent i = new Intent(BookingStatus.this, MainActivity.class);
+                    //i.putExtra("Email", str);
+                    startActivity(i);
+                }
+                else if(item.getItemId() == R.id.bookingItem){
+                    Intent i = new Intent(BookingStatus.this, BookingStatus.class);
+                    startActivity(i);
+                }
+                else if (item.getItemId() == R.id.messagesItem){
+                    Intent i = new Intent(BookingStatus.this, MessageCat.class);
+                    startActivity(i);
+                }
+                else if(item.getItemId() == R.id.accountItem){
+                    Intent i = new Intent(BookingStatus.this, Account.class);
+                    startActivity(i);
+                }
+
+                return false;
+            }
+        });
 
 
         recyclerView =findViewById(R.id.bookingrecycler);
@@ -57,6 +92,7 @@ public class BookingStatus extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String Email = prefs.getString("Email", "no email"); //no id: default value
+        Log.d(TAG, "Email: " + Email);
 
         final String URL_DEALS = "http://magreport.myapc.edu.ph/TaraPinas/API_ViewBook.php?user_email="+Email;
 

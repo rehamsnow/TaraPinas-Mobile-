@@ -88,6 +88,7 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.DealsViewHol
 
                 editor.putString("DealID", String.valueOf(dealsGetSet.getId()));
                 editor.putString("TravelAgency", String.valueOf(dealsGetSet.getAgency()));
+                editor.putString("DEALPRICE", String.valueOf(dealsGetSet.getPrice()));
 
                 editor.commit();
             }

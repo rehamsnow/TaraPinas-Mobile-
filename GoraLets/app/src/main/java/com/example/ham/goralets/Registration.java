@@ -1,7 +1,9 @@
 package com.example.ham.goralets;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -123,8 +125,9 @@ public class Registration extends AppCompatActivity {
                                     getData();
                                     InsertData(Fname_holder, Lname_holder, Email_holder, Birthdate_holder, Contact_holder, Pass_holder);
                                     Log.d(TAG, "InsertData successful.");
-                                    startActivity(new Intent(Registration.this, Login.class));
                                     progressBar.setVisibility(View.GONE);
+                                    FirebaseAuth.getInstance().signOut();
+                                    startActivity(new Intent(Registration.this, Login.class));
                                 }
                             }
                         });

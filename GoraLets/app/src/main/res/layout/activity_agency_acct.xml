@@ -204,17 +204,6 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="11sp"></Button>
 
-                <Button
-                    android:id="@+id/BtnReviewAgency"
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="50dp"
-                    android:background="@drawable/buttonstyle"
-                    android:text="Review Agency"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="11sp">
-
-                </Button>
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -228,8 +217,9 @@
             </android.support.v7.widget.RecyclerView>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical">
                 <EditText

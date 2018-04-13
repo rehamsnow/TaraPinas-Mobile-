@@ -187,6 +187,7 @@
                 </Button>
 
                 <Button
+                    android:id="@+id/BtnEditAcct"
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:background="@drawable/buttonstyle"

@@ -33,7 +33,7 @@ import java.util.List;
 
 public class Filter_Cost1 extends AppCompatActivity {
 
-    private static final String URL_DEALS = "http://magreport.myapc.edu.ph/TaraPinas/Api_sortByCost1%20(1).php";
+    private static final String URL_DEALS = "http://magreport.myapc.edu.ph/TaraPinas/Api_sortByCost1.php";
     List<DealsGetSet> C1List;
     RecyclerView recyclerView;
 
@@ -101,14 +101,14 @@ public class Filter_Cost1 extends AppCompatActivity {
                                 String deal_startdate = deals.getString("deal_startdate");
                                 String deal_enddate = deals.getString("deal_enddate");
 
-                                Integer deal_rating = deals.getInt("deal_rating");
+                                Integer rating = deals.getInt("rating");
                                 Double deal_price = deals.getDouble("deal_price");
                                 String deal_inclusions = deals.getString("deal_inclusions");
                                 String deal_exclusions = deals.getString("deal_exclusions");
 
                                 String agency = deals.getString("agency_name");
 
-                                DealsGetSet dealsGetSet = new DealsGetSet(deal_id, deal_img1, deal_img2, deal_img3, deal_location, deal_startdate, deal_enddate, deal_price, deal_rating, deal_inclusions, deal_exclusions, agency);
+                                DealsGetSet dealsGetSet = new DealsGetSet(deal_id, deal_img1, deal_img2, deal_img3, deal_location, deal_startdate, deal_enddate, deal_price, rating, deal_inclusions, deal_exclusions, agency);
                                 C1List.add(dealsGetSet);
                             }
                             DealsAdapter adapter = new DealsAdapter(Filter_Cost1.this, C1List);

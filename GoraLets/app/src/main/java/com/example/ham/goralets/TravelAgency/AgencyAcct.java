@@ -1,14 +1,19 @@
 package com.example.ham.goralets.TravelAgency;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Rating;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,18 +28,32 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.ham.goralets.Account;
+import com.example.ham.goralets.BookingStatus.BookingStatus;
+import com.example.ham.goralets.BottomNavigationViewHelper;
 import com.example.ham.goralets.Deals.DealLayout;
 import com.example.ham.goralets.Deals.DealsAdapter;
 import com.example.ham.goralets.Deals.DealsGetSet;
 import com.example.ham.goralets.Feedback.FeedbackAdapter;
 import com.example.ham.goralets.Feedback.FeedbackGetSet;
 import com.example.ham.goralets.MainActivity;
+import com.example.ham.goralets.Messages.MessageCat;
 import com.example.ham.goralets.R;
+import com.example.ham.goralets.Registration;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +75,47 @@ public class AgencyAcct extends AppCompatActivity {
     EditText RAFeedback;
     Button RABtnOK, BtnReviewAgency;
 
+    String ServerURL = "http://magreport.myapc.edu.ph/TaraPinas/API_AddFeedbackAgency.php";
+
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agency_acct);
 
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                if(item.getItemId() == R.id.homeItem){
+                    Intent i = new Intent(AgencyAcct.this, MainActivity.class);
+                    //i.putExtra("Email", str);
+                    startActivity(i);
+                }
+                else if(item.getItemId() == R.id.bookingItem){
+                    Intent i = new Intent(AgencyAcct.this, BookingStatus.class);
+                    startActivity(i);
+                }
+                else if (item.getItemId() == R.id.messagesItem){
+                    Intent i = new Intent(AgencyAcct.this, MessageCat.class);
+                    startActivity(i);
+                }
+                else if(item.getItemId() == R.id.accountItem){
+                    Intent i = new Intent(AgencyAcct.this, Account.class);
+                    startActivity(i);
+                }
+
+                return false;
+            }
+        });
+
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String name = prefs.getString("A_Name", "no name"); //no id: default value
+        final String name = prefs.getString("A_Name", "no name"); //no id: default value
         String info = prefs.getString("A_Info", "no info");
         String contact = prefs.getString("A_Contact", "no contact");
         String img = prefs.getString("A_Img", "no img");
@@ -105,39 +158,29 @@ public class AgencyAcct extends AppCompatActivity {
         dealList = new ArrayList<>();
         loadFeedback();
 
-        BtnReviewAgency = (Button) findViewById(R.id.BtnReviewAgency);
-        BtnReviewAgency.setOnClickListener(new View.OnClickListener() {
+        RARating = (RatingBar) findViewById(R.id.RARating);
+        RAFeedback = (EditText) findViewById(R.id.RAFeedback);
+        final String Feedback = RAFeedback.getText().toString();
+
+        SharedPreferences prefs2 = PreferenceManager.getDefaultSharedPreferences(AgencyAcct.this);
+        final String ID = prefs2.getString("ID", "no id");
+
+        RARating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                final Dialog dialog = new Dialog(AgencyAcct.this);
-                dialog.setContentView(R.layout.activity_rateagency);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-                dialog.show();
-
-                RARating = (RatingBar) findViewById(R.id.RARating);
-                RAFeedback = (EditText) findViewById(R.id.RAFeedback);
-
-                RARating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                    @Override
-                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                        String Rating = String.valueOf(rating);
-                    }
-                });
-
-                RABtnOK = (Button)findViewById(R.id.RABtnOK);
-                RABtnOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(AgencyAcct.this, "Feedback Sent!", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                final String Rating = String.valueOf(rating);
+                String raating = Rating.toString();
             }
         });
 
-
-
+            RABtnOK = (Button)findViewById(R.id.RABtnOK);
+            RABtnOK.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InsertData(Feedback, Feedback, ID,name);
+                    Toast.makeText(AgencyAcct.this, "Feedback Sent!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -234,6 +277,49 @@ public class AgencyAcct extends AppCompatActivity {
 
 
 
+    public void InsertData(final String rating,
+                           final String message,
+                           final String user,
+                           final String agency){
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
 
+            @Override
+            protected String doInBackground(String... strings) {
+                String ratingHolder = rating;
+                String messageHolder = message;
+                String userHolder = user;
+                String agencyHolder = agency;
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+                nameValuePairs.add(new BasicNameValuePair("fagency_rating", ratingHolder));
+                nameValuePairs.add(new BasicNameValuePair("fagency_message", messageHolder));
+                nameValuePairs.add(new BasicNameValuePair("user_id", userHolder));
+                nameValuePairs.add(new BasicNameValuePair("agency_id", agencyHolder));
+
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost(ServerURL);
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    org.apache.http.HttpResponse httpResponse = httpClient.execute(httpPost);
+                    HttpEntity httpEntity = httpResponse.getEntity();
+
+                } catch (ClientProtocolException e) {
+                } catch (IOException e) {
+                }
+                return "Data Inserted Successfully";
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                Toast.makeText(AgencyAcct.this, "Data Submitted Successfully", Toast.LENGTH_LONG).show();
+
+            }
+
+        }
+
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+        sendPostReqAsyncTask.execute(rating, message, user, agency);
+
+    }
 }
-

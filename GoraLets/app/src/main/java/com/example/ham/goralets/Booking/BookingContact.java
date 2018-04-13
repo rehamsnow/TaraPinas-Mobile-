@@ -16,7 +16,7 @@ import com.example.ham.goralets.R;
 public class BookingContact extends AppCompatActivity {
     private static final String TAG = "Bookings Contact";
     EditText ContactFname, ContactLname, ContactEmail, ContactNum;
-    Button BtnSubmit;
+    Button BtnSubmit, BtnCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +73,23 @@ public class BookingContact extends AppCompatActivity {
                 i.putExtra("Enddate", Enddate);
                 i.putExtra("Pax", Pax);
                 i.putExtra("Duration", Duration);
-
-                i.putExtra("Fname", fname);
-                i.putExtra("Lname", lname);
-                i.putExtra("Email", email);
-                i.putExtra("Contact", contact);
+                i.putExtra("cFname", fname);
+                i.putExtra("cLname", lname);
+                i.putExtra("cEmail", email);
+                i.putExtra("cContact", contact);
 
                 startActivity(i);
             }
         });
 
+        BtnCancel = (Button) findViewById(R.id.ContactCancel);
+        BtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(BookingContact.this, Bookings.class);
+                startActivity(i);
+            }
+        });
 
 
     }

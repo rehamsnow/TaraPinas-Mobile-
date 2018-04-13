@@ -46,10 +46,11 @@ public class BookingReview extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String ID = prefs.getString("ID", "no id"); //no id: default value
         final String DealID = prefs.getString("DealID", "no deal ID"); //no id: default value
-        final String Fname = prefs.getString("Fname", "no fname");
-        final String Lname = prefs.getString("Lname", "no lname");
-        final String Email = prefs.getString("Email", "no Email");
-        final String Contact = prefs.getString("Contact", "no Contact");
+
+        final String Fname = getIntent().getStringExtra("cFname");
+        final String Lname = getIntent().getStringExtra("cLname");
+        final String Contact = getIntent().getStringExtra("cContact");
+        final String Email = getIntent().getStringExtra("cEmail");
 
         RVFname = (TextView) findViewById(R.id.RVFname);
         RVLname = (TextView) findViewById(R.id.RVLname);
@@ -67,6 +68,9 @@ public class BookingReview extends AppCompatActivity {
         final String Pax = getIntent().getStringExtra("Pax");
         String Duration = getIntent().getStringExtra("Duration");
 
+        SharedPreferences prefs2 = PreferenceManager.getDefaultSharedPreferences(this);
+        final String FINALPRICE = prefs2.getString("FINALPRICE", "0");
+
         RVLocation = (TextView) findViewById(R.id.RVLocation);
         RVStartdate = (TextView) findViewById(R.id.RVStartdate);
         RVEnddate = (TextView) findViewById(R.id.RVEnddate);
@@ -79,22 +83,22 @@ public class BookingReview extends AppCompatActivity {
         RVStartdate.setText(Startdate);
         RVEnddate.setText(Enddate);
         RVDuration.setText(Duration);
+        RVPrice.setText(FINALPRICE);
 
         final String Status = "PENDING";
-        final String Price = "7000";
 
         BtnSubmit = (Button) findViewById(R.id.BtnSubmit);
         BtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Email = getIntent().getStringExtra("Email");
+                String Email = getIntent().getStringExtra("cEmail");
                 Log.d(TAG, "Email: " + Email);
 
                 //getData();
-                InsertData(ID, DealID, Status, Price, Startdate, Enddate, Pax, Fname, Lname, Email, Contact);
+                InsertData(ID, DealID, Status, FINALPRICE, Startdate, Enddate, Pax, Fname, Lname, Email, Contact);
 
                 Intent i = new Intent(BookingReview.this, BookingMsg.class);
-                i.putExtra("Email", Email);
+                i.putExtra("cEmail", Email);
                 startActivity(i);
 
             }
@@ -104,32 +108,13 @@ public class BookingReview extends AppCompatActivity {
         BtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(BookingReview.this, MainActivity.class);
+                Intent i = new Intent(BookingReview.this, Bookings.class);
                 startActivity(i);
             }
         });
     }
 
 
-/*
-    public void getData(){
-
-        String Price = "7000";
-        String Startdate = getIntent().getStringExtra("Startdate");
-        String Enddate = getIntent().getStringExtra("Enddate");
-        String Pax = getIntent().getStringExtra("Pax");
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String ID = prefs.getString("ID", "no id"); //no id: default value
-        String DealID = prefs.getString("DealID", "no deal ID"); //no id: default value
-        String Status = "PENDING";
-
-        String Fname = prefs.getString("Fname", "no fname");
-        String Lname = prefs.getString("Lname", "no lname");
-        String Email = prefs.getString("Email", "no Email");
-        String Contact = prefs.getString("Contact", "no Contact");
-    }
-    */
     public void InsertData(final String ID,
                            final String DealID,
                            final String Status,

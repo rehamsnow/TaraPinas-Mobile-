@@ -34,6 +34,7 @@ import com.example.ham.goralets.MainActivity;
 import com.example.ham.goralets.Messages.MessageCat;
 import com.example.ham.goralets.Messages.Messages;
 import com.example.ham.goralets.R;
+import com.example.ham.goralets.TravelAgency.AgencyAcct;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +52,7 @@ public class DealLayout extends AppCompatActivity {
     private static final String TAG = "deal_layout";
     private BottomNavigationView bottomNavigationView;
     private Button BtnBook;
+    private TextView DealTravelAgency;
 
     List<FeedbackGetSet> dealList;
     RecyclerView recyclerView;
@@ -90,6 +92,7 @@ public class DealLayout extends AppCompatActivity {
                 return false;
             }
         });
+
 
 
         BtnBook = (Button) findViewById(R.id.BtnBook);
@@ -150,7 +153,7 @@ public class DealLayout extends AppCompatActivity {
         }
     }
 
-    private void setImage(String DealImage, String DealImage2, String DealImage3, String DealTitle, String DealStartdate, String DealEnddate, String DealPrice, String DealRating, String DealInclusions, String DealExclusions, String agency){
+    private void setImage(String DealImage, String DealImage2, String DealImage3, String DealTitle, String DealStartdate, String DealEnddate, String DealPrice, String DealRating, String DealInclusions, String DealExclusions,final String agency){
         Log.d(TAG, "setImage : setting images");
 
         ImageView img = findViewById(R.id.DealImage);
@@ -191,6 +194,21 @@ public class DealLayout extends AppCompatActivity {
 
         TextView Agency = findViewById(R.id.DealTravelAgency);
         Agency.setText(agency);
+
+
+        DealTravelAgency = (TextView) findViewById(R.id.DealTravelAgency);
+        DealTravelAgency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(DealLayout.this);
+                String agencyname = prefs.getString("A_Name", "no name");
+
+                if (agencyname.equals(agency)) {
+                    Intent i = new Intent(DealLayout.this, AgencyAcct.class);
+                    startActivity(i);
+                }
+            }
+        });
 
     }
 

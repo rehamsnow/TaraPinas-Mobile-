@@ -54,6 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="13sp"
+                    android:textColor="@color/colorPrimaryDark"
                     android:hint="Email Address" />
 
             </LinearLayout>
@@ -73,6 +74,7 @@
                         android:id="@+id/TFFnameUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
                         android:hint="First Name"
                         />
@@ -94,6 +96,7 @@
                         android:id="@+id/TFLnameUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
                         android:hint="Last Name"
                         />
@@ -114,6 +117,7 @@
                         android:id="@+id/TFContactUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
                         android:hint="Contact Num"
                         />
@@ -134,6 +138,7 @@
                         android:id="@+id/TFBirthdateUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
                         android:hint="Birthdate"
                         />
@@ -141,6 +146,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/BtnUpdateAcct"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/buttonstyle"

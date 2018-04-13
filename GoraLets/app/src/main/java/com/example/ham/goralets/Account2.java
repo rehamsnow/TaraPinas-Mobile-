@@ -36,7 +36,7 @@ public class Account2 extends AppCompatActivity{
     public static String Email;
     private static Context mCtx;
 
-    Button BtnLogout;
+    Button BtnLogout, BtnEditAcct;
 
     private FirebaseAuth auth;
     private static final String TAG = "Profile Account";
@@ -92,8 +92,6 @@ public class Account2 extends AppCompatActivity{
             Log.d(TAG, "Profile Contact: " + Contact);
             Log.d(TAG, "Profile Birthdate: " + Birthdate);
 
-            //Email = getIntent().getStringExtra("Email");
-
             TVFname = (TextView)findViewById(R.id.TVFname);
             TVFname.setText(Fname);
 
@@ -118,6 +116,15 @@ public class Account2 extends AppCompatActivity{
                 public void onClick(View v) {
                     Intent i = new Intent(Account2.this, Login.class);
                     FirebaseAuth.getInstance().signOut();
+                    startActivity(i);
+                }
+            });
+
+            BtnEditAcct = (Button) findViewById(R.id.BtnEditAcct);
+            BtnEditAcct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(Account2.this, EditUser.class);
                     startActivity(i);
                 }
             });

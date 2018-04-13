@@ -100,14 +100,14 @@ public class Filter_Cost3 extends AppCompatActivity {
                                 String deal_startdate = deals.getString("deal_startdate");
                                 String deal_enddate = deals.getString("deal_enddate");
 
-                                Integer deal_rating = deals.getInt("deal_rating");
+                                Integer rating = deals.getInt("rating");
                                 Double deal_price = deals.getDouble("deal_price");
                                 String deal_inclusions = deals.getString("deal_inclusions");
                                 String deal_exclusions = deals.getString("deal_exclusions");
 
                                 String agency = deals.getString("agency_name");
 
-                                DealsGetSet dealsGetSet = new DealsGetSet(deal_id, deal_img1, deal_img2, deal_img3, deal_location, deal_startdate, deal_enddate, deal_price, deal_rating, deal_inclusions, deal_exclusions,agency);
+                                DealsGetSet dealsGetSet = new DealsGetSet(deal_id, deal_img1, deal_img2, deal_img3, deal_location, deal_startdate, deal_enddate, deal_price, rating, deal_inclusions, deal_exclusions,agency);
                                 C3List.add(dealsGetSet);
                             }
                             DealsAdapter adapter = new DealsAdapter(Filter_Cost3.this, C3List);
