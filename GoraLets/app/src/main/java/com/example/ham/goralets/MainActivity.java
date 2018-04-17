@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -42,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String URL_DEALS = "http://magreport.myapc.edu.ph/TaraPinas/API_Deals.php";
     List<DealsGetSet> dealList;
     RecyclerView recyclerView;
-    Button BtnFilter;
+    Button BtnFilter, BtnSearch;
+    EditText Search;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +118,65 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        BtnSearch = (Button) findViewById(R.id.BtnSearch);
+        BtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadSeach();
+            }
+        });
+
+    }
+    private void loadSeach(){
+        Search = (EditText) findViewById(R.id.Search);
+        final String search = Search.getText().toString();
+
+        final String URL_SEARCH = "http://magreport.myapc.edu.ph/TaraPinas/API_Search.php?search="+search;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_SEARCH,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject deals = array.getJSONObject(i);
+
+                                Integer deal_id = deals.getInt("deal_id");
+
+                                String deal_img1 = deals.getString("deal_img1");
+                                String deal_img2 = deals.getString("deal_img2");
+                                String deal_img3 = deals.getString("deal_img3");
+
+                                String deal_location = deals.getString("deal_location");
+                                String deal_startdate = deals.getString("deal_startdate");
+                                String deal_enddate = deals.getString("deal_enddate");
+
+                                Integer deal_rating = deals.getInt("rating");
+                                Double deal_price = deals.getDouble("deal_price");
+                                String deal_inclusions = deals.getString("deal_inclusions");
+                                String deal_exclusions = deals.getString("deal_exclusions");
+
+                                String agency= deals.getString("agency_name");
+
+                                DealsGetSet dealsGetSet = new DealsGetSet(deal_id, deal_img1, deal_img2, deal_img3, deal_location, deal_startdate, deal_enddate, deal_price, deal_rating, deal_inclusions, deal_exclusions, agency);
+                                dealList.add(dealsGetSet);
+                            }
+
+                            DealsAdapter adapter = new DealsAdapter(MainActivity.this, dealList);
+                            recyclerView.setAdapter(adapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        Volley.newRequestQueue(this).add(stringRequest);
     }
 
     private void loadDeals(){

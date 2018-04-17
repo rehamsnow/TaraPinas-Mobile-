@@ -119,8 +119,7 @@
                         android:layout_height="match_parent"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
-                        android:hint="Contact Num"
-                        />
+                        android:hint="Contact Num" />
 
                 </LinearLayout>
                 <LinearLayout
@@ -140,24 +139,31 @@
                         android:layout_height="match_parent"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="13sp"
-                        android:hint="Birthdate"
-                        />
-
+                        android:hint="Birthdate" />
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/BtnUpdateAcct"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/buttonstyle"
+                    android:background="@drawable/button_background"
                     android:text="Update Account"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="40dp"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:textColor="#fff" />
             </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="#fff"
+        app:itemTextColor="#fff"
+        app:menu="@menu/menu_navigation" />
 
 </RelativeLayout>

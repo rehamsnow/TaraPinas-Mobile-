@@ -41,7 +41,8 @@
         <activity android:name=".BookingStatus.BookingStatus" />
         <activity android:name=".BookingStatus.booking_status_details" />
         <activity android:name=".TravelAgency.AgencyAcct" />
-        <activity android:name=".Messages.MessageCat"></activity>
+        <activity android:name=".Messages.MessageCat" />
+        <activity android:name=".Search.SearchResult"></activity>
     </application>
 
 </manifest>
